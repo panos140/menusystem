@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CINEMAVILI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+    body {
+      font-family: 'Ubuntu', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      border: 3px solid lightcoral;
+      border-radius: 4px;
+      background-color: lightcoral;
+
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      gap: 12px;
+    }
+
+
+
+    .menu {
+      text-decoration: none;
+      border: 4px solid wheat;
+      background-color: wheat;
+      border-radius: 4px;
+      padding: 4px;
+      color: black;
+    }
+
+    .askhelp {
+      text-decoration: none;
+      border: 4px solid #b3e5f5;
+      background-color: #b3e5f5;
+      border-radius: 4px;
+      padding: 4px;
+      color: black;
+    }
+
+    .finishorder {
+      text-decoration: none;
+      border: 4px solid #26ea51;
+      background-color: #26ea51;
+      border-radius: 4px;
+      padding: 4px;
+      color: black;
+    }
+
+    .qrscan {
+      text-decoration: none;
+      border: 4px solid #c6d3c9;
+      background-color: #c6d3c9;
+      border-radius: 4px;
+      padding: 4px;
+      color: black;
+    }
+
+    /* Combined finish order + cart button */
+    .cartcombo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      border: 4px solid #26ea51;
+      background-color: #26ea51;
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+      color: black;
+      font-weight: 700;
+    }
+
+    .cartcombo a {
+      color: black;
+      text-decoration: none;
+    }
+
+    /* Main styling */
+    main {
+      padding: 20px;
+    }
+
+    .products {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .product {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      width: 150px;
+      text-align: center;
+    }
+
+    .product img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .product button {
+      margin-top: 10px;
+      background-color: lightcoral;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      background-color: lightcoral;
+      color: black;
+      text-align: center;
+      padding: 12px;
+      margin-top: 40px;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .quality {
+      text-decoration: none;
+      border: 4px solid #f54e4e;
+      background-color: #f54e4e;
+      border-radius: 4px;
+      padding: 4px;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="imgs/icon-5577198_640 1.png" width="50" height="50" class="logo" />
+    <a class="menu" href="#menucatalog"><b>ΜΕΝΟΥ</b></a>
+    <a class="askhelp" href="https://panos140.github.io/Panos-Tsak-Help-Desk-Support/"><b>ΖΗΤΑ ΒΟΗΘΕΙΑ</b></a>
+
+    <!-- Combined button for finish order + cart -->
+    <div class="cartcombo" onclick="openCart()">
+      <a href="scanner.html" style="color: black; text-decoration: none;"><b>ΟΛΟΚΛΗΡΩΣΗ</b></a>
+      <span>🛒</span>
+    </div>
+  </header>
+
+  <main id="menucatalog">
+    <!-- Add your products here -->
+    <section class="products">
+      <!-- Example product -->
+      <div class="product">
+        <img src="products/Feastables-MrBeast-Milk-Chocolate-Crunch-Bar-2-1-oz-60g-1-Count_96f343be-6774-49f5-bced-832385d09c6d5dac23cc17a06962430c176b359f5a29.webp" alt="nachos" width="100" />
+        <p>Feastables Milk Crunch - 4.3€</p>
+        <button onclick="addToCart({id:1,name:'Feastables-MrBeast-Milk-Chocolate-Crunch-Bar',price:4.3})">Προσθήκη</button>
+      </div>
+      <div class="product">
+        <img src="products/81ZmEbJU2hL_AC_UF10001000_QL80_.jpg" alt="nachos" width="100" />
+        <p>Skittles Squishy Cloudz - 3.1€</p>
+        <button onclick="addToCart({id:1,name:'Skittles Squishy Cloudz',price:3.1})">Προσθήκη</button>
+      </div>
+      <div class="product">
+        <img src="products/sxniphspitfwio74fcot.png" alt="nachos" width="100" />
+        <p>Skittles GIANTS 3x bigger - 2.4€</p>
+        <button onclick="addToCart({id:1,name:'Skittles GIANTS 3x bigger',price:2.4})">Προσθήκη</button>
+      </div> 
+      <div class="product">
+        <img src="products/SkittlesFruitYogurt40g_China_db161de5-795a-404d-a7dd-b8b7c461a51ejpg-2.webp" alt="nachos" width="100" />
+        <p>Skittles Fruit Yogurt - 3.3€</p>
+        <button onclick="addToCart({id:1,name:'Skittles Fruit Yogurt',price:3.3})">Προσθήκη</button>
+      </div>           
+      <div class="product">
+        <img src="products/Sour-Patch-kids-Grape-Small-min.png" alt="nachos" width="100" />
+        <p>Sour-Patch-kids-Grape-Small-min - 1.3€</p>
+        <button onclick="addToCart({id:1,name:'Sour-Patch-kids-Grape-Small-min',price:1.3})">Προσθήκη</button>
+      </div> 
+      <div class="product">
+        <img src="products/nerds.png" alt="nachos" width="100" />
+        <p>Nerds Candies Grape & Strawberry - 0.5€</p>
+        <button onclick="addToCart({id:1,name:'Nerds Candies Grape & Strawberry',price:0.5})">Προσθήκη</button>
+      </div>    
+      <div class="product">
+        <img src="products/NERDS-BIG-CHEWY-.png" alt="nachos" width="100" />
+        <p>Nerds big chewy - 1€</p>
+        <button onclick="addToCart({id:1,name:'Nerds big chewy',price:1})">Προσθήκη</button>
+      </div>    
+      <div class="product">
+        <img src="products/nerds_watermeloncherry.png" alt="nachos" width="100" />
+        <p>Nerds Watermelon & Cherry - 0.5€</p>
+        <button onclick="addToCart({id:1,name:'Nerds Watermelon & Cherry',price:0.5})">Προσθήκη</button>
+      </div>  
+      <div class="product">
+        <img src="products/jimmy-s-pop-corn-salted-caramel-8713276011190-33484810715299_grande.webp" alt="nachos" width="100" />
+        <p>Jimmy's Pop corn salted caramel - 5€</p>
+        <button onclick="addToCart({id:1,name:'Jimmy-s Pop corn salted caramel',price:5})">Προσθήκη</button>
+      </div>          
+      <div class="product">
+        <img src="products/WA5101618_700x.webp" alt="nachos" width="100" />
+        <p>Sangaria Original Ramu Bottle - 2.3€</p>
+        <button onclick="addToCart({id:1,name:'Sangaria Original Ramu Bottle',price:2.3})">Προσθήκη</button>
+      </div> 
+      <div class="product">
+        <img src="products/Laysmejidi.avif" alt="nachos" width="100" />
+        <p>Lays Με Ξιδι - 1.3€</p>
+        <button onclick="addToCart({id:1,name:'Lays Με Ξιδι',price:1.3})">Προσθήκη</button>
+      </div>  
+      <div class="product">
+        <img src="products/Lays-Oregano-Chips-180gr.jpg" alt="nachos" width="100" />
+        <p>Lays Με Ριγανι - 0.9€</p>
+        <button onclick="addToCart({id:1,name:'Lays Με Ριγανι',price:0.9})">Προσθήκη</button>
+      </div> 
+      <div class="product">
+        <img src="products/sprite.jpg" alt="nachos" width="100" />
+        <p>Sprite - 1.73€</p>
+        <button onclick="addToCart({id:1,name:'Sprite',price:1.73})">Προσθήκη</button>
+      </div>           
+      <div class="product">
+        <img src="products/haribopicoballa.avif" alt="nachos" width="100" />
+        <p>Haribo Ζελεδακια Pico Balla - 1.3€</p>
+        <button onclick="addToCart({id:1,name:'Haribo Ζελεδακια Pico Balla',price:1.3})">Προσθήκη</button>
+      </div>        
+      <div class="product">
+        <img src="products/hariboberries.jpg" alt="nachos" width="100" />
+        <p>Haribo Berries - 1.3€</p>
+        <button onclick="addToCart({id:1,name:'Haribo Berries',price:1.3})">Προσθήκη</button>
+      </div>
+      <div class="product">
+        <img src="products/haribodragibus.jpg" alt="nachos" width="100" />
+        <p>Haribo Dragibus - 1.4€</p>
+        <button onclick="addToCart({id:1,name:'Haribo dragibus',price:1.4})">Προσθήκη</button>
+      </div>      
+      <div class="product">
+        <img src="products/laysalt.avif" alt="nachos" width="100" />
+        <p>Lays Με Αλάτι - 0.9€</p>
+        <button onclick="addToCart({id:1,name:'Lays Με Αλάτι',price:0.9})">Προσθήκη</button>
+      </div>         
+      <div class="product">
+        <img src="products/cocacola.jpg" alt="nachos" width="100" />
+        <p>Coca Cola - 2€</p>
+        <button onclick="addToCart({id:1,name:'Coca Cola',price:2})">Προσθήκη</button>
+      </div>       
+      <div class="product">
+        <img src="products/unnamed.png" alt="nachos" width="100" />
+        <p>Nerds Grape & Strawberry 142gr - 2.3€</p>
+        <button onclick="addToCart({id:1,name:'Nerds Grape & Strawberry 142gr',price:2.3})">Προσθήκη</button>
+      </div>                         
+      <h2>ΠΡΟΣΟΧΗ!! ΤΑ ΠΡΟΙΟΝΤΑ ΕΡΧΟΝΤΑΙ ΣΕ ΜΙΚΡΑ ΠΑΚΕΤΑΚΙΑ, ΟΧΙ ΟΛΟ ΤΟ ΚΟΥΤΙ Ή ΣΑΚΟΥΛΑ.</h2> 
+      <!-- Add more products similarly -->
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 CINEMAVILI</p>
+    <a class="quality" href="quality.html">Η ΠΟΙΟΤΗΤΑ ΜΑΣ</a>
+  </footer>
+
+  <script>
+    // Placeholder function to open cart popup (implement your cart popup here)
+    function openCart() {
+      alert("Άνοιγμα Καλαθιού - Εδώ θα εμφανιστεί το καλάθι.");
+    }
+
+    // Example addToCart function
+    function addToCart(product) {
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.push(product);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(product.name + " προστέθηκε στο καλάθι!");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ολοκλήρωση Παραγγελίας</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Ubuntu', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+      background-color: #f8f9fa;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    #qr-reader {
+      width: 300px;
+      margin-bottom: 20px;
+    }
+
+    #qr-result {
+      font-weight: bold;
+      color: darkgreen;
+      font-size: 1.2rem;
+      white-space: pre-wrap;
+      max-width: 90%;
+      word-break: break-word;
+      margin-bottom: 10px;
+    }
+
+    #cart {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+    }
+
+    .cart-item button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 300px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Σάρωση QR Κωδικού</h2>
+  <div id="qr-reader"></div>
+  <div id="qr-result">Καμία σάρωση ακόμα</div>
+
+  <label for="seat">Θέση καθίσματος:</label>
+  <input type="text" id="seat" name="seat" placeholder="π.χ. D5" required />
+
+  <div id="cart">
+    <h3>Καλάθι</h3>
+    <div id="cart-items"></div>
+  </div>
+
+  <form id="qr-form" action="https://formspree.io/f/xovdzaqr" method="POST" style="display:none;">
+    <input type="hidden" name="qrData" id="qr-input" />
+    <input type="hidden" name="cart" id="cart-input" />
+    <input type="hidden" name="seat" id="seat-input" />
+  </form>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function updateCartDisplay() {
+      const cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = "";
+      cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <span>${item.name} - ${item.price}€</span>
+          <button onclick="removeFromCart(${index})">Διαγραφή</button>
+        `;
+        cartItemsDiv.appendChild(div);
+      });
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartDisplay();
+    }
+
+    function formatCartForEmail(cartArray) {
+      if (!Array.isArray(cartArray)) return "";
+      return cartArray.map(item => `- ${item.name} (${item.price}€)`).join("\n");
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+      document.getElementById('qr-result').textContent = "✅ QR Κωδικός: " + decodedText;
+
+      const cleaned = decodedText.normalize().toUpperCase();
+
+      // <-- REPLACED CONDITION STARTS HERE -->
+      if (
+        cleaned.includes("MOVIE:") &&
+        cleaned.includes("NAME:") &&
+        cleaned.includes("TICKET NUMBER:")
+      ) {
+        const seat = document.getElementById('seat').value.trim();
+        if (!seat) {
+          alert("Παρακαλώ εισάγετε τη θέση καθίσματος.");
+          return;
+        }
+
+        document.getElementById('qr-input').value = decodedText;
+        document.getElementById('cart-input').value = formatCartForEmail(cart);
+        document.getElementById('seat-input').value = seat;
+
+        document.getElementById('qr-form').submit();
+
+        localStorage.removeItem("cart");
+        cart = [];
+        updateCartDisplay();
+
+        html5QrcodeScanner.clear()
+          .then(() => {
+            document.getElementById("qr-reader").innerHTML = "";
+            console.log("Scanner fully stopped.");
+          })
+          .catch((error) => {
+            console.warn("Failed to clear scanner:", error);
+          });
+      } else {
+        alert("Μη έγκυρος QR Κωδικός.");
+      }
+      // <-- REPLACED CONDITION ENDS HERE -->
+    }
+
+    const html5QrcodeScanner = new Html5QrcodeScanner(
+      "qr-reader",
+      { fps: 10, qrbox: 250 },
+      false
+    );
+
+    html5QrcodeScanner.render(onScanSuccess);
+
+    updateCartDisplay();
+  </script>
+</body>
+</html>
